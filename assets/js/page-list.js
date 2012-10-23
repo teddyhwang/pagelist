@@ -19,6 +19,11 @@
     Core.prototype._init = function() {
         this._injectPageListRequirements();
         this._insertPages();
+        // TODO: No idea where the 94 is coming from yet but that's the value you need to have a scrollbar when page list is long
+        var height = global.outerHeight - $('#Footer').outerHeight() - 94;
+        if (global.outerHeight - $('#Footer').outerHeight() - 94 < $('#PageList ul').outerHeight()) {
+            $('#PageList ul').css('height', height);
+        }
         this._bindLiveSearch();
         this._loadiFrame();
     };
