@@ -104,8 +104,8 @@ body {
 }
 
 #Footer input {
-    width: 130px;
-    margin: 2px 0 0 0;
+    width: 110px;
+    margin: 0;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border: solid 1px #333;
@@ -114,7 +114,7 @@ body {
     -webkit-box-shadow: 0 1px 1px rgba(255,255,255,0.2);
     box-shadow: 0 1px 1px rgba(255,255,255,0.2);
     color: #aaa;
-    padding: 5px;
+    padding: 5px 20px 5px 5px;
     font-size: 11px;
 }
 
@@ -128,6 +128,17 @@ body {
     background: #fff;
     color: #333;
     outline: none;
+}
+
+.ico-clearfield {
+    text-indent: -10000px;
+    display: none;
+    width: 16px;
+    height: 16px;
+    background: url(../images/ico-clearfield.png) no-repeat 0 0;
+    position: absolute;
+    right: 55px;
+    top: 20px;
 }
 
 /* Themes */

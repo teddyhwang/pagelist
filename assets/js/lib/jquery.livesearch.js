@@ -27,11 +27,6 @@
 		filter: function() {
 			if ($.trim(this.field.val()) == '') { this.list.children('li').show(); return; }
 			this.displayResults(this.getScores(this.field.val().toLowerCase()));
-
-	        $('.category').hide();
-	        $('#PageList li:visible').each(function(i, obj){
-	            $(obj).prevAll('.category').first().show();
-	        });
 		},
 		
 		setupCache: function() {
@@ -49,6 +44,17 @@
 			var self = this;
 			this.list.children('li:not(.category)').hide();
 			$.each(scores, function(i, score) { self.rows[score[1]].show(); });
+
+			$('.category').hide();
+	        $('#PageList li:visible').each(function(i, obj){
+	            $(obj).prevAll('.category').first().show();
+	        });
+
+		    if (this.field.val() === '') {
+	            $('.ico-clearfield').hide();
+	        } else {
+	            $('.ico-clearfield').show();
+	        }
 		},
 		
 		getScores: function(term) {

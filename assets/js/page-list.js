@@ -27,7 +27,7 @@
         var $iframe = '<iframe src="" id="MainFrame"></iframe>',
             $button = '<div id="Button"><i class="icon icon-list"></i></div>',
             $page_list = '<div id="PageList"><ul></ul></div>',
-            $footer = '<div id="Footer"><input type="text" id="PageListSearch" placeholder="Search"></div>';
+            $footer = '<div id="Footer"><input type="search" id="PageListSearch" placeholder="Search" autocomplete="off"><i class="ico-clearfield"></i></div>';
 
         $('body').prepend($iframe + $button + $page_list + $footer);
 
