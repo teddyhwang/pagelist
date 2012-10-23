@@ -19,15 +19,17 @@
     Core.prototype._init = function() {
         this._injectPageListRequirements();
         this._insertPages();
+        this._bindLiveSearch();
         this._loadiFrame();
     };
 
     Core.prototype._injectPageListRequirements = function() {
         var $iframe = '<iframe src="" id="MainFrame"></iframe>',
             $button = '<div id="Button"><i class="icon icon-list"></i></div>',
-            $page_list = '<div id="PageList"><ul></ul></div>';
+            $page_list = '<div id="PageList"><ul></ul></div>',
+            $footer = '<div id="Footer"><input type="text" id="PageListSearch" placeholder="Search"></div>';
 
-        $('body').prepend($iframe + $button + $page_list);
+        $('body').prepend($iframe + $button + $page_list + $footer);
 
         $('#Button').on('click', $.proxy(this._clickButton, this));
     };
@@ -50,6 +52,10 @@
 
         this.config.pages.reverse();
         $('#PageList a').on('click', $.proxy(this._clickPageLink, this));
+    };
+
+    Core.prototype._bindLiveSearch = function() {
+        $('#PageListSearch').liveUpdate('PageList ul');
     };
 
     Core.prototype._loadiFrame = function() {
