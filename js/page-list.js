@@ -19,22 +19,21 @@
     Core.prototype._init = function() {
         this._injectPageListRequirements();
         this._insertPages();
-        // TODO: No idea where the 94 is coming from yet but that's the value you need to have a scrollbar when page list is long
-        var height = global.outerHeight - $('#Footer').outerHeight() - 94;
-        if (global.outerHeight - $('#Footer').outerHeight() - 94 < $('#PageList ul').outerHeight()) {
-            $('#PageList ul').css('height', height);
-        }
         this._bindLiveSearch();
+        this.original_pagelist_height = $('#PageList ul').outerHeight();
+        this._calculatePageListHeight();
+        var calculateWindow = _.debounce($.proxy(this._calculatePageListHeight, this), 200)
+        $(global).resize(calculateWindow);
         this._loadiFrame();
     };
 
     Core.prototype._injectPageListRequirements = function() {
         var $iframe = '<iframe src="" id="MainFrame"></iframe>',
             $button = '<div id="Button"><i class="icon icon-list"></i></div>',
-            $page_list = '<div id="PageList"><ul></ul></div>',
-            $footer = '<div id="Footer"><input type="search" id="PageListSearch" placeholder="Search" autocomplete="off"><i class="ico-clearfield"></i></div>';
+            $page_list = '<div id="PageList"><ul></ul><div id="Footer"><input type="search" id="PageListSearch" placeholder="Search" autocomplete="off"><i class="ico-clearfield"></i></div></div>',
+            $footer = '';
 
-        $('body').prepend($iframe + $button + $page_list + $footer);
+        $('body').prepend($iframe + $button + $page_list);
 
         $('#Button').on('click', $.proxy(this._clickButton, this));
     };
@@ -57,6 +56,16 @@
 
         this.config.pages.reverse();
         $('#PageList a').on('click', $.proxy(this._clickPageLink, this));
+    };
+
+    Core.prototype._calculatePageListHeight = function() {
+        // TODO: No idea where the 94 is coming from yet but that's the value you need to have a scrollbar when page list is long
+        var height = global.outerHeight - $('#Footer').outerHeight() - 94;
+        if (height < this.original_pagelist_height) {
+            $('#PageList ul').css('height', height);
+        } else {
+            $('#PageList ul').css('height', 'auto');
+        }
     };
 
     Core.prototype._bindLiveSearch = function() {
