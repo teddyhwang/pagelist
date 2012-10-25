@@ -32,7 +32,7 @@
         var $iframe = '<iframe src="" id="MainFrame"></iframe>',
             $button = '<div id="Button"><i class="icon icon-list"></i></div>',
             $page_list = '<div id="PageList"><ul></ul></div>',
-            $footer = '<div id="Footer"><div id="SearchSettings"><input type="search" id="PageListSearch" placeholder="Search" autocomplete="off"><i class="ico-clearfield"></i><a href="#Settings" class="btn"><i class="ico-settings"></i></a></div></div>',
+            $footer = '<div id="Footer"><div id="SearchSettings"><input type="search" id="PageListSearch" placeholder="Search" autocomplete="off"><i class="ico-clearfield"></i><span class="btn"><i class="ico-settings"></i></span></div></div>',
             $settings = '<div id="Settings"><label class="lbl-theme">Theme</label><div class="options"><label for="DarkTheme"><input type="radio" id="DarkTheme" name="theme" val="dark">Dark</label><label for="LightTheme"><input type="radio" id="LightTheme" name="theme" val="light">Light</label></div></div>';
 
         $('body').prepend($iframe + $button + $page_list);
