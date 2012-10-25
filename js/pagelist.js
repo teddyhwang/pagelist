@@ -31,14 +31,21 @@
         var $iframe = '<iframe src="" id="MainFrame"></iframe>',
             $button = '<div id="Button"><i class="icon icon-list"></i></div>',
             $page_list = '<div id="PageList"><ul></ul></div>',
-            $footer = '<div id="Footer"><input type="search" id="PageListSearch" placeholder="Search" autocomplete="off"><i class="ico-clearfield"></i><a href="#Settings" class="btn"><i class="ico-settings"></i></a></div>';
+            $footer = '<div id="Footer"><input type="search" id="PageListSearch" placeholder="Search" autocomplete="off"><i class="ico-clearfield"></i><a href="#Settings" class="btn"><i class="ico-settings"></i></a></div>',
+            $settings = '<div id="Settings"><label for="DarkTheme"><input type="radio" id="DarkTheme" name="theme" val="dark">Dark</label><label for="LightTheme"><input type="radio" id="LightTheme" name="theme" val="light">Light</label></div>';
 
         $('body').prepend($iframe + $button + $page_list);
         $('#PageList').append($footer);
 
-        $('#Button').on('click', $.proxy(this._clickButton, this));
-    };
+        this.footer_initial_height = $('#Footer').outerHeight();
 
+        $('#Footer').append($settings);
+
+        $('#Footer .btn').on('click', $.proxy(this._clickSettings, this));
+        $('#Button').on('click', $.proxy(this._clickButton, this));
+
+        this._toggleTheme();
+    };
 
     Core.prototype._insertPages = function() {
         $.each(this.config.pages, $.proxy(function(i, val) {
@@ -95,7 +102,13 @@
         $('#MainFrame').attr('src', url);
     };
 
+    Core.prototype._clickSettings = function(evt) {
+        var ct = evt.currentTarget,
+            $current = $(ct);
+    };
+
     Core.prototype._clickButton = function(evt) {
+        // TODO: get away from using jquery animate - use move.js or tweenk.js
         if (parseInt($('#MainFrame').css('left'), 10) == 0) {
             $(evt.currentTarget).animate({
                 left: -$(evt.currentTarget).outerWidth()
@@ -135,6 +148,18 @@
                 });
             });
         }
+    };
+
+    Core.prototype._toggleTheme = function() {
+        $('input[name="theme"]').change(function(evt) {
+            var $ct = $(evt.currentTarget);
+
+            if ($ct.attr('val') === 'dark') {
+                $('body').removeClass('light');
+            } else {
+                $('body').addClass('light');
+            }
+        });
     };
 
 }).call(this);
