@@ -30,10 +30,11 @@
     Core.prototype._injectPageListRequirements = function() {
         var $iframe = '<iframe src="" id="MainFrame"></iframe>',
             $button = '<div id="Button"><i class="icon icon-list"></i></div>',
-            $page_list = '<div id="PageList"><ul></ul><div id="Footer"><input type="search" id="PageListSearch" placeholder="Search" autocomplete="off"><i class="ico-clearfield"></i></div></div>',
-            $footer = '';
+            $page_list = '<div id="PageList"><ul></ul></div>',
+            $footer = '<div id="Footer"><input type="search" id="PageListSearch" placeholder="Search" autocomplete="off"><i class="ico-clearfield"></i><a href="#Settings" class="btn"><i class="ico-settings"></i></a></div>';
 
         $('body').prepend($iframe + $button + $page_list);
+        $('#PageList').append($footer);
 
         $('#Button').on('click', $.proxy(this._clickButton, this));
     };
