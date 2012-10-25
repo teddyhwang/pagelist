@@ -28,18 +28,23 @@
     };
 
     Core.prototype._injectPageListRequirements = function() {
+        // TODO: use a template library like underscore or mustache/handlebars
         var $iframe = '<iframe src="" id="MainFrame"></iframe>',
             $button = '<div id="Button"><i class="icon icon-list"></i></div>',
             $page_list = '<div id="PageList"><ul></ul></div>',
-            $footer = '<div id="Footer"><input type="search" id="PageListSearch" placeholder="Search" autocomplete="off"><i class="ico-clearfield"></i><a href="#Settings" class="btn"><i class="ico-settings"></i></a></div>',
-            $settings = '<div id="Settings"><label for="DarkTheme"><input type="radio" id="DarkTheme" name="theme" val="dark">Dark</label><label for="LightTheme"><input type="radio" id="LightTheme" name="theme" val="light">Light</label></div>';
+            $footer = '<div id="Footer"><div id="SearchSettings"><input type="search" id="PageListSearch" placeholder="Search" autocomplete="off"><i class="ico-clearfield"></i><a href="#Settings" class="btn"><i class="ico-settings"></i></a></div></div>',
+            $settings = '<div id="Settings"><label class="lbl-theme">Theme</label><div class="options"><label for="DarkTheme"><input type="radio" id="DarkTheme" name="theme" val="dark">Dark</label><label for="LightTheme"><input type="radio" id="LightTheme" name="theme" val="light">Light</label></div></div>';
 
         $('body').prepend($iframe + $button + $page_list);
         $('#PageList').append($footer);
 
-        this.footer_initial_height = $('#Footer').outerHeight();
-
         $('#Footer').append($settings);
+
+        this.footer_settings_height = $('#Settings').outerHeight();
+        this.max_footer_height = $('#Footer').outerHeight();
+        this.min_footer_height = $('#Footer').outerHeight() - this.footer_settings_height;
+
+        $('#Footer').css('height', this.min_footer_height);
 
         $('#Footer .btn').on('click', $.proxy(this._clickSettings, this));
         $('#Button').on('click', $.proxy(this._clickButton, this));
@@ -63,7 +68,7 @@
         }, this));
 
         this.config.pages.reverse();
-        $('#PageList a').on('click', $.proxy(this._clickPageLink, this));
+        $('#PageList ul a').on('click', $.proxy(this._clickPageLink, this));
     };
 
     Core.prototype._calculatePageListHeight = function() {
@@ -105,6 +110,13 @@
     Core.prototype._clickSettings = function(evt) {
         var ct = evt.currentTarget,
             $current = $(ct);
+
+        evt.preventDefault();
+        if (parseInt($('#Footer').css('height'), 10) == this.min_footer_height) {
+            $('#Footer').animate({'height': this.max_footer_height}, 200);
+        } else {
+            $('#Footer').animate({'height': this.min_footer_height}, 200);
+        }
     };
 
     Core.prototype._clickButton = function(evt) {

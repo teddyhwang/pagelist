@@ -11,6 +11,10 @@ body {
     color: #ddd;
 }
 
+body.light {
+    color: #333;
+}
+
 #PageList {
     left: 0;
     top: 0;
@@ -93,15 +97,10 @@ body {
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 180px;
-    padding: 15px 10px;
-    background: #333;
-    border-top: solid 1px #222;
-    -webkit-box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.2);
-    box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.2);
+    width: 200px;
 }
 
-#Footer input {
+#Footer input[type="search"] {
     width: 115px;
     margin: 0;
     -webkit-border-radius: 5px;
@@ -116,16 +115,39 @@ body {
     font-size: 12px;
 }
 
-#Footer input:hover {
+#Footer input[type="search"]:hover {
     background: #777777;
     color: #ccc;
 }
 
-#Footer input:focus {
+#Footer input[type="search"]:focus {
     border: solid 1px #333;
     background: #fff;
     color: #333;
     outline: none;
+}
+
+.light #Footer input[type="search"] {
+    width: 115px;
+    border: solid 1px rgba(0,0,0,0.2);
+    background: #b5b5b5;
+    -moz-box-shadow: 0 0 0;
+    -webkit-box-shadow: 0 0 0;
+    box-shadow: 0 0 0;
+    color: #111;
+    padding: 6px 25px 6px 5px;
+    font-size: 12px;
+}
+
+.light #Footer input[type="search"]:hover {
+    background: #909090;
+    color: #ccc;
+}
+
+.light #Footer input[type="search"]:focus {
+    border: solid 1px rgba(0,0,0,0.5);
+    background: #fff;
+    color: #333;
 }
 
 .ico-clearfield {
@@ -168,6 +190,40 @@ body {
 #Footer .btn {
     position: absolute;
     right: 10px;
+}
+
+#SearchSettings {
+    padding: 15px 10px;
+    border-bottom: solid 1px rgba(0,0,0,0.3);
+}
+
+#Settings {
+    padding: 10px;
+    border-top: solid 1px rgba(255,255,255,0.2);
+    overflow: hidden;
+}
+
+.lbl-theme {
+    float: left;
+    width: 60px;
+    font-size: 11px;
+    font-style: italic;
+    margin: 4px 0 0;
+}
+
+.options {
+    float: right;
+    width: 110px;
+    text-align: right;
+}
+
+.options label {
+    font-size: 12px;
+    margin: 0 0 0 10px;
+}
+
+.options input {
+    margin: 0 5px 0 0;
 }
 
 /* Themes */
@@ -306,4 +362,18 @@ body {
 
 .light .icon-close {
     background: url(../images/ico-close-light.png) no-repeat 0 0;
+}
+
+#Footer {
+    background: #333;
+    border-top: solid 1px #222;
+    -webkit-box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.2);
+}
+
+.light #Footer {
+    background: #c7c7c7;
+    border-top: solid 1px rgba(255,255,255,0.5);
+    -webkit-box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.2);
 }
