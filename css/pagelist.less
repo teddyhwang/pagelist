@@ -78,15 +78,15 @@ body {
     height: 27px;
     .border-top-right-radius(3px);
     .border-bottom-right-radius(3px);
-}
 
-#Button:hover {
-    cursor: pointer;
-}
+    &:hover {
+        cursor: pointer;
+    }
 
-#Button .icon {
-    position: absolute;
-    right: 10px;
+    .icon {
+        position: absolute;
+        right: 10px;
+    }
 }
 
 .icon {
@@ -100,31 +100,32 @@ body {
     bottom: 0;
     left: 0;
     width: 200px;
+
+    input[type="search"] {
+        width: 115px;
+        margin: 0;
+        .border-radius(5px);
+        border: solid 1px #333;
+        background: #666666;
+        .box-shadow(0 1px 1px rgba(255,255,255,0.2));
+        color: #aaa;
+        padding: 6px 25px 6px 5px;
+        font-size: 12px;
+
+        &:hover {
+            background: #777777;
+            color: #ccc;
+        }
+
+        &:focus {
+            border: solid 1px #333;
+            background: #fff;
+            color: #333;
+            outline: none;
+        }
+    }
 }
 
-#Footer input[type="search"] {
-    width: 115px;
-    margin: 0;
-    .border-radius(5px);
-    border: solid 1px #333;
-    background: #666666;
-    .box-shadow(0 1px 1px rgba(255,255,255,0.2));
-    color: #aaa;
-    padding: 6px 25px 6px 5px;
-    font-size: 12px;
-}
-
-#Footer input[type="search"]:hover {
-    background: #777777;
-    color: #ccc;
-}
-
-#Footer input[type="search"]:focus {
-    border: solid 1px #333;
-    background: #fff;
-    color: #333;
-    outline: none;
-}
 
 .light #Footer input[type="search"] {
     width: 115px;
@@ -204,15 +205,15 @@ body {
     float: right;
     width: 110px;
     text-align: right;
-}
 
-.options label {
-    font-size: 12px;
-    margin: 0 0 0 10px;
-}
+    label {
+        font-size: 12px;
+        margin: 0 0 0 10px;
+    }
 
-.options input {
-    margin: 0 5px 0 0;
+    input {
+        margin: 0 5px 0 0;
+    }
 }
 
 /* Themes */
