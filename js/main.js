@@ -33,7 +33,6 @@ require([
     var $       = global.$;
 
     $(function() {
-        var pagelist = new Pagelist.Core({ pages: pages });
+        var pagelist = new Pagelist({ pages: pages });
     });
-
 });

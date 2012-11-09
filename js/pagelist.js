@@ -2,9 +2,7 @@
 
     var global = this;
 
-    var Pagelist = (global.Pagelist || (global.Pagelist = { }));
-
-    var Core = Pagelist.Core = function(options) {
+    var Pagelist = global.Pagelist = function(options) {
 
         var defaults = {
             pages : []
@@ -16,7 +14,7 @@
         this._init();
     };
 
-    Core.prototype._init = function() {
+    Pagelist.prototype._init = function() {
         this._injectPageListRequirements();
         this._insertPages();
         this._bindLiveSearch();
@@ -27,7 +25,7 @@
         this._loadiFrame();
     };
 
-    Core.prototype._injectPageListRequirements = function() {
+    Pagelist.prototype._injectPageListRequirements = function() {
         // TODO: use a template library like underscore or mustache/handlebars
         var $iframe = '<iframe src="" id="MainFrame"></iframe>',
             $button = '<div id="Button"><i class="icon icon-list"></i></div>',
@@ -52,7 +50,7 @@
         this._toggleTheme();
     };
 
-    Core.prototype._insertPages = function() {
+    Pagelist.prototype._insertPages = function() {
         $.each(this.config.pages, $.proxy(function(i, val) {
             if ($.inArray(val.category, this.categories) <= 0) {
                 this.categories.push(val.category);
@@ -71,7 +69,7 @@
         $('#PageList ul a').on('click', $.proxy(this._clickPageLink, this));
     };
 
-    Core.prototype._calculatePageListHeight = function() {
+    Pagelist.prototype._calculatePageListHeight = function() {
         // TODO: No idea where the 94 is coming from yet but that's the value you need to have a scrollbar when page list is long
         var height = global.outerHeight - $('#Footer').outerHeight() - 94;
         if (height < this.original_pagelist_height) {
@@ -81,11 +79,11 @@
         }
     };
 
-    Core.prototype._bindLiveSearch = function() {
+    Pagelist.prototype._bindLiveSearch = function() {
         $('#PageListSearch').liveUpdate('PageList ul');
     };
 
-    Core.prototype._loadiFrame = function() {
+    Pagelist.prototype._loadiFrame = function() {
         var url = this.config.pages[0].url;
 
         if (global.location.hash !== '') {
@@ -98,7 +96,7 @@
         $('#MainFrame').attr('src', url);
     };
 
-    Core.prototype._clickPageLink = function(evt) {
+    Pagelist.prototype._clickPageLink = function(evt) {
         $('#PageList li').removeClass('active');
         $(evt.currentTarget).parent().addClass('active');
 
@@ -107,7 +105,7 @@
         $('#MainFrame').attr('src', url);
     };
 
-    Core.prototype._clickSettings = function(evt) {
+    Pagelist.prototype._clickSettings = function(evt) {
         var ct = evt.currentTarget,
             $current = $(ct);
 
@@ -119,7 +117,7 @@
         }
     };
 
-    Core.prototype._clickButton = function(evt) {
+    Pagelist.prototype._clickButton = function(evt) {
         // TODO: get away from using jquery animate - use move.js or tweenk.js
         if (parseInt($('#MainFrame').css('left'), 10) == 0) {
             $(evt.currentTarget).animate({
@@ -162,7 +160,7 @@
         }
     };
 
-    Core.prototype._toggleTheme = function() {
+    Pagelist.prototype._toggleTheme = function() {
         $('input[name="theme"]').change(function(evt) {
             var $ct = $(evt.currentTarget);
 
