@@ -15,7 +15,9 @@
     };
 
     Pagelist.prototype._init = function() {
-        this._injectPageListRequirements();
+        this._instanceVariables();
+
+        this._pageListEvents();
         this._insertPages();
 
         this._initLiveSearch();
@@ -29,20 +31,16 @@
         this._loadiFrame();
     };
 
-    Pagelist.prototype._injectPageListRequirements = function() {
-        var $iframe     = $('#tmpl-iframe').html(),
-            $button     = $('#tmpl-button').html(),
-            $pagelist   = $('#tmpl-pagelist').html(),
-            $settings   = $('#tmpl-settings').html(),
-            $footer     = $('#tmpl-footer').html();
+    Pagelist.prototype._instanceVariables = function() {
+        this.$iframe     = $('#MainFrame'),
+        this.$button     = $('#Button'),
+        this.$pagelist   = $('#PageList'),
+        this.$ul         = this.$pagelist.find('ul'),
+        this.$settings   = $('#Settings'),
+        this.$footer     = $('#Footer');
+    };
 
-        $('body').prepend($iframe + $button + $pagelist);
-
-        $('#PageList').append($footer);
-        $('#Footer').append($settings);
-
-        this._instanceVariables();
-
+    Pagelist.prototype._pageListEvents = function() {
         this.footer_settings_height = this.$settings.outerHeight();
         this.max_footer_height = this.$footer.outerHeight();
         this.min_footer_height = this.$footer.outerHeight() - this.footer_settings_height;
@@ -53,15 +51,6 @@
         this.$button.on('click', $.proxy(this._clickButton, this));
 
         this._toggleTheme();
-    };
-
-    Pagelist.prototype._instanceVariables = function() {
-        this.$iframe     = $('#MainFrame'),
-        this.$button     = $('#Button'),
-        this.$pagelist   = $('#PageList'),
-        this.$ul         = this.$pagelist.find('ul'),
-        this.$settings   = $('#Settings'),
-        this.$footer     = $('#Footer');
     };
 
     Pagelist.prototype._insertPages = function() {
