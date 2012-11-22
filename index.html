@@ -22,5 +22,41 @@
 
     <body>
 
+    <script id="tmpl-iframe" type="text/x-handlebars-template">
+        <iframe src="" id="MainFrame"></iframe>
+    </script>
+
+    <script id="tmpl-button" type="text/x-handlebars-template">
+        <div id="Button">
+            <i class="icon icon-list"></i>
+        </div>
+    </script>
+
+    <script id="tmpl-pagelist" type="text/x-handlebars-template">
+        <div id="PageList">
+            <ul></ul>
+        </div>
+    </script>
+
+    <script id="tmpl-footer" type="text/x-handlebars-template">
+        <div id="Footer">
+            <div id="SearchSettings">
+                <input type="search" id="PageListSearch" placeholder="Search" autocomplete="off">
+                <i class="ico-clearfield"></i>
+                <span class="btn"><i class="ico-settings"></i></span>
+            </div>
+        </div>
+    </script>
+
+    <script id="tmpl-settings" type="text/x-handlebars-template">
+        <div id="Settings">
+            <label class="lbl-theme">Theme</label>
+            <div class="options">
+                <label for="DarkTheme"><input type="radio" id="DarkTheme" name="theme" val="dark">Dark</label>
+                <label for="LightTheme"><input type="radio" id="LightTheme" name="theme" val="light">Light</label>
+            </div>
+        </div>
+    </script>
+
     </body>
 </html>

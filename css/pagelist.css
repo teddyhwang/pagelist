@@ -44,6 +44,7 @@ body.light {
   left: 0;
   top: 0;
   position: absolute;
+  z-index: 10;
   width: 200px;
   /* TODO - don't hardcode the width */
 
@@ -72,6 +73,9 @@ body.light {
 #PageList a:hover {
   text-decoration: none;
 }
+.no-js #PageList {
+  left: -200px;
+}
 #MainFrame {
   border: none;
   width: 100%;
@@ -85,6 +89,7 @@ body.light {
   -webkit-box-shadow: 0px 0px 30px 1px #000000;
   -moz-box-shadow: 0px 0px 30px 1px #000000;
   box-shadow: 0px 0px 30px 1px #000000;
+  background: #fff;
 }
 #Button {
   position: fixed;

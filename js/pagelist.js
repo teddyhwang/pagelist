@@ -17,37 +17,51 @@
     Pagelist.prototype._init = function() {
         this._injectPageListRequirements();
         this._insertPages();
-        this._bindLiveSearch();
-        this.original_pagelist_height = $('#PageList ul').outerHeight();
+
+        this._initLiveSearch();
+
+        this.original_pagelist_height = this.$ul.outerHeight();
         this._calculatePageListHeight();
+
         var calculateWindow = _.debounce($.proxy(this._calculatePageListHeight, this), 200)
         $(global).resize(calculateWindow);
+
         this._loadiFrame();
     };
 
     Pagelist.prototype._injectPageListRequirements = function() {
-        // TODO: use a template library like underscore or mustache/handlebars
-        var $iframe = '<iframe src="" id="MainFrame"></iframe>',
-            $button = '<div id="Button"><i class="icon icon-list"></i></div>',
-            $page_list = '<div id="PageList"><ul></ul></div>',
-            $footer = '<div id="Footer"><div id="SearchSettings"><input type="search" id="PageListSearch" placeholder="Search" autocomplete="off"><i class="ico-clearfield"></i><span class="btn"><i class="ico-settings"></i></span></div></div>',
-            $settings = '<div id="Settings"><label class="lbl-theme">Theme</label><div class="options"><label for="DarkTheme"><input type="radio" id="DarkTheme" name="theme" val="dark">Dark</label><label for="LightTheme"><input type="radio" id="LightTheme" name="theme" val="light">Light</label></div></div>';
+        var $iframe     = $('#tmpl-iframe').html(),
+            $button     = $('#tmpl-button').html(),
+            $pagelist   = $('#tmpl-pagelist').html(),
+            $settings   = $('#tmpl-settings').html(),
+            $footer     = $('#tmpl-footer').html();
 
-        $('body').prepend($iframe + $button + $page_list);
+        $('body').prepend($iframe + $button + $pagelist);
+
         $('#PageList').append($footer);
-
         $('#Footer').append($settings);
 
-        this.footer_settings_height = $('#Settings').outerHeight();
-        this.max_footer_height = $('#Footer').outerHeight();
-        this.min_footer_height = $('#Footer').outerHeight() - this.footer_settings_height;
+        this._instanceVariables();
 
-        $('#Footer').css('height', this.min_footer_height);
+        this.footer_settings_height = this.$settings.outerHeight();
+        this.max_footer_height = this.$footer.outerHeight();
+        this.min_footer_height = this.$footer.outerHeight() - this.footer_settings_height;
 
-        $('#Footer .btn').on('click', $.proxy(this._clickSettings, this));
-        $('#Button').on('click', $.proxy(this._clickButton, this));
+        this.$footer.css('height', this.min_footer_height);
+
+        this.$footer.find('.btn').on('click', $.proxy(this._clickSettings, this));
+        this.$button.on('click', $.proxy(this._clickButton, this));
 
         this._toggleTheme();
+    };
+
+    Pagelist.prototype._instanceVariables = function() {
+        this.$iframe     = $('#MainFrame'),
+        this.$button     = $('#Button'),
+        this.$pagelist   = $('#PageList'),
+        this.$ul         = this.$pagelist.find('ul'),
+        this.$settings   = $('#Settings'),
+        this.$footer     = $('#Footer');
     };
 
     Pagelist.prototype._insertPages = function() {
@@ -57,29 +71,31 @@
             }
         }, this));
 
-        $.each(this.categories, function(i, val) {
-            $('#PageList ul').append('<li class="category"><h2>'+val+'</h2></li>');
-        });
+        $.each(this.categories, $.proxy(function(i, val) {
+            this.$ul.append('<li class="category"><h2>'+val+'</h2></li>');
+        }, this));
 
         $.each(this.config.pages.reverse(), $.proxy(function(i, val) {
-            $('#PageList ul').find('li:contains('+val.category+')').after('<li><a href="#'+val.url+'">'+val.title+'</a></li>');
+            this.$ul.find('li:contains('+val.category+')').after('<li><a href="#'+val.url+'">'+val.title+'</a></li>');
         }, this));
 
         this.config.pages.reverse();
-        $('#PageList ul a').on('click', $.proxy(this._clickPageLink, this));
+
+        this.$ul.find('a').on('click', $.proxy(this._clickPageLink, this));
     };
 
     Pagelist.prototype._calculatePageListHeight = function() {
         // TODO: No idea where the 94 is coming from yet but that's the value you need to have a scrollbar when page list is long
-        var height = global.outerHeight - $('#Footer').outerHeight() - 94;
+        var height = global.outerHeight - this.$footer.outerHeight() - 94;
+
         if (height < this.original_pagelist_height) {
-            $('#PageList ul').css('height', height);
+            this.$ul.css('height', height);
         } else {
-            $('#PageList ul').css('height', 'auto');
+            this.$ul.css('height', 'auto');
         }
     };
 
-    Pagelist.prototype._bindLiveSearch = function() {
+    Pagelist.prototype._initLiveSearch = function() {
         $('#PageListSearch').liveUpdate('PageList ul');
     };
 
@@ -88,21 +104,21 @@
 
         if (global.location.hash !== '') {
             url = global.location.hash.replace('#', '');
-            $('#PageList').find('a[href="#'+url+'"]').parent().addClass('active');
+            this.$pagelist.find('a[href="#'+url+'"]').parent().addClass('active');
         } else {
-            $('#PageList').find('li').not('.category').first().addClass('active');
+            this.$pagelist.find('li').not('.category').first().addClass('active');
         }
 
-        $('#MainFrame').attr('src', url);
+        this.$iframe.attr('src', url);
     };
 
     Pagelist.prototype._clickPageLink = function(evt) {
-        $('#PageList li').removeClass('active');
+        this.$pagelist.find('li').removeClass('active');
         $(evt.currentTarget).parent().addClass('active');
 
         var url = $(evt.currentTarget).attr('href').replace('#', '');
 
-        $('#MainFrame').attr('src', url);
+        this.$iframe.attr('src', url);
     };
 
     Pagelist.prototype._clickSettings = function(evt) {
@@ -110,15 +126,16 @@
             $current = $(ct);
 
         evt.preventDefault();
-        if (parseInt($('#Footer').css('height'), 10) == this.min_footer_height) {
-            $('#Footer').animate({'height': this.max_footer_height}, 200);
+
+        if (parseInt(this.$footer.css('height'), 10) == this.min_footer_height) {
+            this.$footer.animate({'height': this.max_footer_height}, 200);
         } else {
-            $('#Footer').animate({'height': this.min_footer_height}, 200);
+            this.$footer.animate({'height': this.min_footer_height}, 200);
         }
     };
 
     Pagelist.prototype._clickButton = function(evt) {
-        // TODO: get away from using jquery animate - use move.js or tweenk.js
+        // TODO: get away from using jquery animate - use move.js or tween.js
         if (parseInt($('#MainFrame').css('left'), 10) == 0) {
             $(evt.currentTarget).animate({
                 left: -$(evt.currentTarget).outerWidth()

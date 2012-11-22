@@ -28,7 +28,7 @@ require([
     '../lib/underscore/underscore-min',
 ], function() {
 
-    var global  = this; // in context to the browser `this` is `window`
+    var global  = this; // in context to the browser, `this` is `window`
 
     var $       = global.$;
 
