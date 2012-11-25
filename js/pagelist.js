@@ -55,17 +55,17 @@
 
     Pagelist.prototype._insertPages = function() {
         $.each(this.config.pages, $.proxy(function(i, val) {
-            if ($.inArray(val.category, this.categories) <= 0) {
+            if ($.inArray(val.category, this.categories) < 0) {
                 this.categories.push(val.category);
             }
         }, this));
 
-        $.each(this.categories, $.proxy(function(i, val) {
-            this.$ul.append('<li class="category"><h2>'+val+'</h2></li>');
+        $.each(this.categories.reverse(), $.proxy(function(i, val) {
+            this.$ul.prepend('<li class="category"><h2>'+val+'</h2></li>');
         }, this));
 
         $.each(this.config.pages.reverse(), $.proxy(function(i, val) {
-            this.$ul.find('li:contains('+val.category+')').after('<li><a href="#'+val.url+'">'+val.title+'</a></li>');
+            this.$ul.find('li.category:contains('+val.category+')').after('<li><a href="#'+val.url+'">'+val.title+'</a></li>');
         }, this));
 
         this.config.pages.reverse();
