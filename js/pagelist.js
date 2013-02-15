@@ -89,7 +89,13 @@
     };
 
     Pagelist.prototype._loadiFrame = function() {
-        var url = this.config.pages[0].url;
+        var url
+            ,pages = this.config.pages
+            ,i = 0
+            ;
+    
+        // cycle through urls to find one that isn't empty
+        while( pages[i++] && !(url = pages[i].url) );
 
         if (global.location.hash !== '') {
             url = global.location.hash.replace('#', '');
