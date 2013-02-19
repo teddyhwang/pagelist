@@ -10,7 +10,8 @@
 
         this.config = $.extend(true, defaults, options || { });
 
-        this.categories = [];
+        // hash
+        this.categories = {};
         this._init();
     };
 
@@ -49,33 +50,41 @@
 
         this.$footer.find('.btn').on('click', $.proxy(this._clickSettings, this));
         this.$button.on('click', $.proxy(this._clickButton, this));
+        // delegate events for better performance
+        this.$ul.on('click', 'a', $.proxy(this._clickPageLink, this));
 
         this._toggleTheme();
     };
 
     Pagelist.prototype._insertPages = function() {
-        $.each(this.config.pages, $.proxy(function(i, val) {
-            if ($.inArray(val.category, this.categories) < 0) {
-                this.categories.push(val.category);
-            }
-        }, this));
 
-        $.each(this.categories.reverse(), $.proxy(function(i, val) {
-            this.$ul.prepend('<li class="category"><h2>'+val+'</h2></li>');
-        }, this));
+        // local caches are faster
+        var categories = this.categories
+            ,$el = this.$ul
+            ;
 
-        $.each(this.config.pages.reverse(), $.proxy(function(i, val) {
-            this.$ul.find('li.category:contains('+val.category+')').after('<li><a href="#'+val.url+'">'+val.title+'</a></li>');
-        }, this));
+        $.each(this.config.pages, function(i, val) {
+            // get category page array (and create if necessary)
+            var hash = categories[ val.category ] ||
+                        (categories[ val.category ] = []);
 
-        this.config.pages.reverse();
+            // add page to category
+            hash.push( val );
+        });
 
-        this.$ul.find('a').on('click', $.proxy(this._clickPageLink, this));
+        // build html (chunking DOM modifications)
+        $.each(categories, function(name, arr) {
+            var $catlist = $('<li class="category"><h2>'+name+'</h2></li>');
+            $.each(arr, function(i, val) {
+                $catlist.after('<li><a href="#'+val.url+'">'+val.title+'</a></li>');
+            });
+            $el.append( $catlist );
+        });
     };
 
     Pagelist.prototype._calculatePageListHeight = function() {
         // TODO: No idea where the 94 is coming from yet but that's the value you need to have a scrollbar when page list is long
-        var height = global.outerHeight - this.$footer.outerHeight() - 94;
+        var height = $(window).outerHeight() - this.$footer.outerHeight();
 
         if (height < this.original_pagelist_height) {
             this.$ul.css('height', height);
@@ -89,7 +98,12 @@
     };
 
     Pagelist.prototype._loadiFrame = function() {
-        var url = this.config.pages[0].url;
+        var url
+            ,pages = this.config.pages
+            ,i = 0
+            ;
+
+        while( pages[i++] && !(url = pages[i].url) );
 
         if (global.location.hash !== '') {
             url = global.location.hash.replace('#', '');
