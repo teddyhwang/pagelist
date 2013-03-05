@@ -1,8 +1,6 @@
-LESS    = ./css/pagelist.less
+LESS    = ./less/pagelist.less
 CSS     = ./css/pagelist.css
 CSS_MIN = ./css/pagelist.min.css
-JS      = ./js/pagelist.js
-JS_MIN  = ./js/pagelist.min.js
 DATE    = $(shell date +%I:%M%p)
 CHECK   = \033[32m✔\033[39m
 HR      =-------------------------------------------------------
@@ -20,10 +18,10 @@ compile:
 	@echo "${HR}\n"
 	@lessc ${LESS} > ${CSS}
 	@echo "Compile LESS file document.less...          ${CHECK} Done"
-	@yui-compressor ${CSS} > ${CSS_MIN}
+	@yuicompressor ${CSS} > ${CSS_MIN}
 	@echo "Minifying CSS document.css...               ${CHECK} Done"
-	@uglifyjs2 ${JS} > ${JS_MIN}
-	@echo "Minifying JS document.js...                 ${CHECK} Done"
+	@r.js -o js/build.js
+	@echo "Building JS pagelist.min.js...              ${CHECK} Done"
 	@echo "\n${HR}"
 	@echo "All assets successfully compiled at ${DATE}."
 	@echo "${DR}\n"
