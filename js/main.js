@@ -1,38 +1,37 @@
-requirejs.config({
+require.config({
+
+    baseUrl: 'js/',
+
+    waitSeconds: 30,
+
+    paths: {
+        // jQuery
+        'jquery'                    : '../components/jquery/jquery',
+        'almond'                    : '../components/almond/almond',
+        'modernizr'                 : '../components/modernizr/modernizr',
+        'underscore'                : '../components/underscore/underscore',
+
+        // Third Party Plugins
+        'quicksilver'               : '../components/quicksilver/quicksilver',
+        'livesearch'                : '../components/jquery.livesearch/jquery.livesearch',
+
+        'pagelist'                  : 'pagelist'
+    },
+
     shim: {
-        'pagelist': {
-            deps: [
-                'pages',
-                '../lib/jquery/jquery-1.8.2.min',
-                '../lib/livesearch/quicksilver',
-                '../lib/livesearch/jquery.livesearch',
-                '../lib/underscore/underscore-min'
-            ],
-            exports: 'Pagelist'
+
+        // jQuery plugins (non-amd compliant) need this shim config
+        'livesearch': {
+            deps: ['jquery', 'quicksilver']
         },
-        '../lib/livesearch/jquery.livesearch': {
-            deps: [
-                '../jquery/jquery-1.8.2.min',
-                '../livesearch/quicksilver'
-            ]
+
+        underscore: {
+            exports: '_'
         }
     }
+
 });
 
-require([
-    'pagelist',
-    'pages',
-    '../lib/jquery/jquery-1.8.2.min',
-    '../lib/livesearch/quicksilver',
-    '../lib/livesearch/jquery.livesearch',
-    '../lib/underscore/underscore-min',
-], function() {
+require(['modernizr']);
+require(['pagelist']);
 
-    var global  = this; // in context to the browser, `this` is `window`
-
-    var $       = global.$;
-
-    $(function() {
-        var pagelist = new Pagelist({ pages: pages });
-    });
-});

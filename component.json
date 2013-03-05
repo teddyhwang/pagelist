@@ -1,0 +1,14 @@
+{
+  "name": "Pagelist",
+  "version": "1.0.0",
+  "main": "./css/pagelist.min.css",
+  "dependencies": {
+    "bootstrap": "*",
+    "jquery": "~1.9.1",
+    "jquery.livesearch": "git://github.com/teddyhwang/jquery.livesearch",
+    "modernizr": "*",
+    "requirejs": "*",
+    "almond": "*",
+    "underscore": "*"
+  }
+}

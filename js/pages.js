@@ -1,7 +1,7 @@
 var pages = [
     {
-        title: 'Sapient Nitro',
-        url: 'http://sapient.com/en-us/sapientnitro.html',
+        title: 'Teddy Hwang',
+        url: 'http://www.teddyhwang.com',
         category: 'Homepage'
     },
     {
