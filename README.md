@@ -19,3 +19,11 @@ The array for the links is manually created but a simple PHP script that looked 
 - Use HTML5 history api for when changing links
 - Documentation
 - Examples with a PHP script
+
+## Get Started
+
+Update `js/pages.js` with the pages you want to show
+
+## Development Mode
+
+- `bower install` to get started with dependencies
