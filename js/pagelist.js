@@ -36,7 +36,7 @@ define(
             this.original_pagelist_height = this.$ul.outerHeight();
             this._calculatePageListHeight();
 
-            var calculateWindow = _.debounce($.proxy(this._calculatePageListHeight, this), 200)
+            var calculateWindow = _.debounce($.proxy(this._calculatePageListHeight, this), 200);
             $(window).resize(calculateWindow);
 
             this._loadiFrame();
@@ -144,7 +144,7 @@ define(
 
             evt.preventDefault();
 
-            if (parseInt(this.$footer.css('height'), 10) == this.min_footer_height) {
+            if (parseInt(this.$footer.css('height'), 10) === this.min_footer_height) {
                 this.$footer.animate({'height': this.max_footer_height}, 200);
             } else {
                 this.$footer.animate({'height': this.min_footer_height}, 200);
@@ -153,7 +153,7 @@ define(
 
         Pagelist.prototype._clickButton = function(evt) {
             // TODO: get away from using jquery animate - use move.js or tween.js
-            if (parseInt($('#MainFrame').css('left'), 10) == 0) {
+            if (parseInt($('#MainFrame').css('left'), 10) === 0) {
                 $(evt.currentTarget).animate({
                     left: -$(evt.currentTarget).outerWidth()
                 }, 200, function(){
@@ -163,11 +163,11 @@ define(
                         width: '50px'
                     }, 200, function() {
                         $('#MainFrame').animate({
-                            left: parseInt($('#MainFrame').css('left'), 10) == 0 ? $('#PageList').outerWidth() : 0
+                            left: parseInt($('#MainFrame').css('left'), 10) === 0 ? $('#PageList').outerWidth() : 0
                         }, 600);
                         $(evt.currentTarget).animate({
                             width: '72px',
-                            left: parseInt($('#MainFrame').css('left'), 10) == 0 ? $('#PageList').outerWidth() - 1 : -1,
+                            left: parseInt($('#MainFrame').css('left'), 10) === 0 ? $('#PageList').outerWidth() - 1 : -1
                         }, 600, function() {
                             $(evt.currentTarget).animate({
                                 width: '28px'
@@ -177,10 +177,10 @@ define(
                 });
             } else {
                 $('#MainFrame').animate({
-                    left: parseInt($('#MainFrame').css('left'), 10) == 0 ? $('#PageList').outerWidth() : 0
+                    left: parseInt($('#MainFrame').css('left'), 10) === 0 ? $('#PageList').outerWidth() : 0
                 }, 400);
                 $(evt.currentTarget).animate({
-                    left: parseInt($('#MainFrame').css('left'), 10) == 0 ? $('#PageList').outerWidth() - 1 : -1,
+                    left: parseInt($('#MainFrame').css('left'), 10) === 0 ? $('#PageList').outerWidth() - 1 : -1
                 }, 400, function() {
                     $(evt.currentTarget).animate({
                         left: -$(evt.currentTarget).outerWidth()
