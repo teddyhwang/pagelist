@@ -1,0 +1,14 @@
+{
+  "name": "documentation-boilerplate",
+  "version": "0.1.0",
+  "description": "Documentation Boilerplate",
+  "author": "Teddy Hwang",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-less": "*",
+    "grunt-contrib-connect": "*",
+    "grunt-shell": "*"
+  }
+}
